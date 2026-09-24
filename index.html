@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zoom Room Screen Share</title>
+<meta name="description" content="Step-by-step guide for sharing your laptop screen to a Zoom Room from the Zoom desktop app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F7FB;
+    --surface:#FFFFFF;
+    --surface-2:#EEF1F6;
+    --text:#19202E;
+    --text-muted:#5B6474;
+    --border:#E1E5EC;
+    --accent:#2D6CDF;
+    --accent-strong:#1E52B8;
+    --accent-soft:#E9F0FE;
+    --accent-contrast:#FFFFFF;
+    --note-text:#1B4F9C;
+    --note-bg:#EEF4FF;
+    --note-border:#C9DBFA;
+    --tip-text:#8A5A00;
+    --tip-bg:#FFF6E2;
+    --tip-border:#F0DBA3;
+    --illo-line:#8B95A6;
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10131A;
+      --surface:#181D27;
+      --surface-2:#1F2530;
+      --text:#ECEFF4;
+      --text-muted:#9AA4B4;
+      --border:#2B313D;
+      --accent:#5B9BFF;
+      --accent-strong:#84B4FF;
+      --accent-soft:#1C2A42;
+      --accent-contrast:#0B1220;
+      --note-text:#A9CBFF;
+      --note-bg:#152238;
+      --note-border:#26375A;
+      --tip-text:#F0C368;
+      --tip-bg:#2B2310;
+      --tip-border:#4A3B15;
+      --illo-line:#5C6576;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10131A;
+    --surface:#181D27;
+    --surface-2:#1F2530;
+    --text:#ECEFF4;
+    --text-muted:#9AA4B4;
+    --border:#2B313D;
+    --accent:#5B9BFF;
+    --accent-strong:#84B4FF;
+    --accent-soft:#1C2A42;
+    --accent-contrast:#0B1220;
+    --note-text:#A9CBFF;
+    --note-bg:#152238;
+    --note-border:#26375A;
+    --tip-text:#F0C368;
+    --tip-bg:#2B2310;
+    --tip-border:#4A3B15;
+    --illo-line:#5C6576;
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  img{max-width:100%;}
+  [hidden]{display:none !important;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    padding-inline:20px;
+  }
+  h1,h2,h3,.font-display{
+    font-family:"Sora", "IBM Plex Sans", sans-serif;
+    letter-spacing:-0.01em;
+  }
+  .wrap{
+    max-width:720px;
+    margin-inline:auto;
+    padding-block:36px 64px;
+  }
+
+  /* header */
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  header.masthead{margin-bottom:28px;}
+  header.masthead h1{
+    font-size:clamp(26px, 4.2vw, 34px);
+    line-height:1.15;
+    font-weight:700;
+    margin:8px 0 12px;
+    text-wrap:balance;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    color:var(--text-muted);
+    font-size:13px;
+  }
+  .meta-item{display:flex; align-items:center; gap:6px;}
+  .meta-item svg{width:14px; height:14px; flex:none;}
+  .lead{
+    font-size:17px;
+    line-height:1.6;
+    color:var(--text);
+    margin-top:18px;
+    max-width:60ch;
+  }
+  .subhead{
+    color:var(--text-muted);
+    font-size:14px;
+    margin-top:2px;
+  }
+
+  /* quick nav */
+  nav.jump{
+    display:flex;
+    gap:8px;
+    margin:22px 0 8px;
+    flex-wrap:wrap;
+  }
+  nav.jump a{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    text-decoration:none;
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:7px 14px;
+    border-radius:999px;
+  }
+  nav.jump a:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* quick answer */
+  .quickstart{
+    margin-top:24px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 20px;
+    display:flex;
+    gap:14px;
+  }
+  .quickstart .icon{
+    flex:none;
+    width:34px; height:34px;
+    border-radius:9px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .quickstart .icon svg{width:18px; height:18px;}
+  .quickstart h2{font-size:14px; margin:0 0 4px; font-weight:700;}
+  .quickstart p{margin:0; font-size:14.5px; line-height:1.55; color:var(--text-muted);}
+  .quickstart b{color:var(--text); font-weight:600;}
+
+  /* part sections */
+  section.part{margin-top:52px;}
+  .part-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--accent);
+    margin-bottom:14px;
+  }
+  .part-head .num{
+    font-family:"IBM Plex Mono", monospace;
+    color:var(--accent);
+    font-weight:600;
+    font-size:14px;
+  }
+  .part-head h2{
+    font-size:20px;
+    font-weight:700;
+    margin:0;
+  }
+  .use-when{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--text-muted);
+    margin-bottom:26px;
+  }
+  .use-when b{color:var(--text); font-weight:600;}
+
+  /* steps */
+  ol.steps{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  ol.steps > li{
+    display:flex;
+    gap:14px;
+  }
+  .step-num{
+    flex:none;
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--accent);
+    color:var(--accent-contrast);
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:600;
+    font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .step-body{flex:1; min-width:0;}
+  .step-body p{
+    margin:0;
+    font-size:15px;
+    line-height:1.6;
+  }
+  .step-body code{
+    font-family:"IBM Plex Mono", monospace;
+    background:var(--surface-2);
+    padding:1px 6px;
+    border-radius:5px;
+    font-size:0.92em;
+  }
+
+  /* callouts */
+  .callout{
+    margin-top:10px;
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:13.5px;
+    line-height:1.55;
+    border:1px solid;
+  }
+  .callout b{font-weight:700;}
+  .callout.note{background:var(--note-bg); border-color:var(--note-border); color:var(--note-text);}
+  .callout.tip{background:var(--tip-bg); border-color:var(--tip-border); color:var(--tip-text);}
+
+  /* illustration card */
+  figure.illo{
+    margin:14px 0 0;
+  }
+  figure.illo .frame{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    display:flex;
+    justify-content:center;
+  }
+  figure.illo .frame img{
+    max-width:100%;
+    height:auto;
+    border-radius:8px;
+    display:block;
+  }
+  figure.illo figcaption{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-top:8px;
+    font-style:italic;
+  }
+  .illo-line{stroke:var(--illo-line); fill:none;}
+
+  /* recap */
+  .recap{
+    margin-top:56px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px 24px;
+  }
+  .recap h2{font-size:16px; margin:0 0 16px; font-weight:700;}
+  .recap-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:520px){
+    .recap-grid{grid-template-columns:1fr;}
+  }
+  .recap-col .col-title{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .recap-col ol{
+    margin:0; padding-left:18px;
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--text);
+  }
+
+  footer.page-footer{
+    margin-top:40px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--text-muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Internal Guide</div>
+    <h1>Sharing Your Screen to a Zoom Room</h1>
+    <div class="subhead">A quick guide for laptop users — Zoom desktop app</div>
+    <div class="meta-row" style="margin-top:14px;">
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24" fill="none"><path class="illo-line" d="M12 8v4l3 2M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9Z"/></svg>
+        Updated Jul 31, 2026
+      </span>
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24" fill="none"><path class="illo-line" d="M4 19V5a1 1 0 0 1 1-1h9l6 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"/><path class="illo-line" d="M14 4v6h6"/></svg>
+        4 min read
+      </span>
+    </div>
+    <p class="lead">This guide shows you how to share your screen from your laptop to a physical Zoom Room using the Zoom desktop app — whether the room is detected automatically or you need to connect with a code.</p>
+  </header>
+
+  <nav class="jump">
+    <a href="#part-1">Part 1 · In-room sharing</a>
+    <a href="#part-2">Part 2 · Manual room code</a>
+  </nav>
+
+  <div class="quickstart">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+    </div>
+    <div>
+      <h2>Quick answer</h2>
+      <p>Laptop near the room? Open Zoom, click the <b>Room icon</b> top‑right, then <b>Share screen</b>. Joining a scheduled meeting instead? Click <b>···</b> next to it and choose <b>Join from room</b>.</p>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <section class="part" id="part-1">
+    <div class="part-head">
+      <span class="num">Part 1</span>
+      <h2>Share Your Screen to a Zoom Room</h2>
+    </div>
+    <p class="use-when">Use this when your laptop is near a Zoom Room — <b>a meeting room with its own camera, screen, and speakers</b> — and you want to send your laptop screen straight to that room's display.</p>
+
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <p>Open the Zoom desktop app. On the home screen you'll see your upcoming meetings for the day.</p>
+          <figure class="illo">
+            <div class="frame">
+              <img src="fig1.png" alt="Zoom desktop app home screen showing today's meetings">
+            </div>
+            <figcaption>Zoom desktop app home screen with today's meetings</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <p>In the top‑right corner of the app, click the <b>Room</b> icon.</p>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <p>From the menu that appears, choose one of the options: <b>New meeting</b>, <b>Share screen</b>, or <b>Connect to room</b>. Click <b>Share screen</b> to send your laptop screen straight to the nearby Zoom Room.</p>
+          <figure class="illo">
+            <div class="frame">
+              <img src="fig2.png" alt="Room menu showing New meeting, Share screen, and Connect to room options">
+            </div>
+            <figcaption>Room menu — Share screen option</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <p>For a scheduled meeting instead, click the <b>···</b> (more options) next to that meeting.</p>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <p>Choose <b>Join from room</b> to join the meeting through the Zoom Room and share your screen there.</p>
+          <div class="callout note"><b>Note:</b> This option is only available if there is a Zoom link attached to the invite.</div>
+          <figure class="illo">
+            <div class="frame">
+              <img src="fig3.png" alt="Meeting options menu with Join from room highlighted">
+            </div>
+            <figcaption>Meeting options — Join from room</figcaption>
+          </figure>
+          <div class="callout tip"><b>Tip:</b> If the Room icon or these options are grayed out, this feature has been disabled by your account admin. Contact IT/support if you need it enabled.</div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- PART 2 -->
+  <section class="part" id="part-2">
+    <div class="part-head">
+      <span class="num">Part 2</span>
+      <h2>If the Room Isn't Detected Automatically</h2>
+    </div>
+    <p class="use-when">Sometimes the Zoom desktop app can't automatically detect a nearby Zoom Room. When that happens, you can connect manually using a <b>room code</b> shown on the room's display.</p>
+
+    <ol class="steps" start="6">
+      <li>
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <p>From your meeting on the home screen, click <b>Start</b> (or the <b>···</b> next to the meeting) and choose <b>Start from room</b>.</p>
+          <figure class="illo">
+            <div class="frame">
+              <img src="fig4.png" alt="Start meeting menu with Start from room option">
+            </div>
+            <figcaption>Start meeting — Start from room option</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">7</span>
+        <div class="step-body">
+          <p>If Zoom can't find the room automatically, a <b>Room not detected</b> pop‑up appears, asking for a room code.</p>
+          <figure class="illo">
+            <div class="frame">
+              <img src="fig5.png" alt="Room not detected dialog asking for a room code">
+            </div>
+            <figcaption>Room not detected — enter room code</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">8</span>
+        <div class="step-body">
+          <p>Look at the TV or display in the meeting room. The room code is shown in the top‑right corner of the screen.</p>
+          <figure class="illo">
+            <div class="frame" style="gap:14px; flex-wrap:wrap;">
+              <img src="fig6.png" alt="Room display showing the room code in the top-right corner" style="max-width:280px;">
+              <img src="fig7.png" alt="Close-up of the room code on the display" style="max-width:140px;">
+            </div>
+            <figcaption>Room code shown on the room's display, and a close‑up of the code</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">9</span>
+        <div class="step-body">
+          <p>Type the room code into the field on your laptop and click <b>Continue</b> to connect.</p>
+          <div class="callout tip"><b>Tip:</b> The room code changes each time the room screen resets, so always check the current code on the display rather than reusing an old one.</div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="recap">
+    <h2>Cheat sheet</h2>
+    <div class="recap-grid">
+      <div class="recap-col">
+        <div class="col-title">Room detected</div>
+        <ol>
+          <li>Open Zoom desktop app</li>
+          <li>Click the Room icon</li>
+          <li>Click Share screen</li>
+        </ol>
+      </div>
+      <div class="recap-col">
+        <div class="col-title">Room not detected</div>
+        <ol>
+          <li>Click Start → Start from room</li>
+          <li>Read the code on the room display</li>
+          <li>Type it in and click Continue</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <span>Zoom desktop app · Room sharing guide</span>
+    <span>Questions? Contact IT/support.</span>
+  </footer>
+
+</div>
+</body>
+</html>
